@@ -204,6 +204,7 @@ export const navigation = [
       { title: 'Messages', href: '/messages' },
       { title: 'Groups', href: '/groups' },
       { title: 'Attachments', href: '/attachments' },
+      { title: 'Communities', href: '/communities' },
     ],
   },
 ]

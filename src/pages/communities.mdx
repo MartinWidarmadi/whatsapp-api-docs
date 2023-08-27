@@ -15,6 +15,15 @@ The community model contains all the information about the files you send to you
   <Property name="id" type="string">
     Unique identifier for the community.
   </Property>
+  <Property name="name" type="string">
+    The name for the community.
+  </Property>
+  <Property name="description" type="string">
+    The description for the group.
+  </Property>
+  <Property name="profile_picture" type="string">
+    The profile picture URL for the group
+  </Property>
   <Property name="message_id" type="string">
     Unique identifier for the message associated with the community.
   </Property>
@@ -41,9 +50,6 @@ The community model contains all the information about the files you send to you
     ### Optional attributes
 
     <Properties>
-      <Property name="conversation_id" type="string">
-        Limit to communities from a given conversation.
-      </Property>
       <Property name="limit" type="integer">
         Limit the number of communities returned.
       </Property>
@@ -69,13 +75,18 @@ The community model contains all the information about the files you send to you
       "has_more": false,
       "data": [
         {
-          "id": "Nc6yKKMpcxiiFxp6",
-          "message_id": "LoPsJaMcPBuFNjg1",
-          "conversation_id": "discussion_result.pdf",
-          "file_url": "https://assets.protocol.chat/communities/discussion_result.pdf",
-          "file_type": "application/pdf",
-          "file_size": 1230340,
-          "created_at": 692233200
+          "id": "Nc6yKipcxiiFxp6",
+          "name": "Cataliz Batch 4",
+          "groups": [
+            {
+              "id": "l7cGNIBKZiNJ6wqF"
+              // ...
+            },
+            {
+              "id": "bQKmTCnhOcueT2XR",
+              // ...
+            }
+          ],
         },
         {
           "id": "hSIhXBhNe8X1d8Et"
@@ -100,9 +111,23 @@ The community model contains all the information about the files you send to you
     ### Required attributes
 
     <Properties>
-      <Property name="file" type="string">
-        The file you want to add as an community.
-      </Property>
+        <Property name="name" type="string">
+          The name for the community.
+        </Property>
+        <Property name="groups" type="array">
+          An array of group objects that are members of the community.
+        </Property>
+    </Properties>
+
+    ### Optional attributes
+
+    <Properties>
+        <Property name="description" type="string">
+          The description for the group.
+        </Property>
+        <Property name="profile_picture" type="string">
+          The profile picture URL for the group
+        </Property>
     </Properties>
 
   </Col>
@@ -115,7 +140,10 @@ The community model contains all the information about the files you send to you
 
     const client = new ApiClient(token)
 
-    await client.communities.create({ file })
+    await client.communities.create({
+      "name": "Cataliz Batch 4",
+      "groups": ["l7cGNIBKZiNJ6wqF", "bQKmTCnhOcueT2XR"]
+     })
     ```
 
     </CodeGroup>
@@ -123,11 +151,21 @@ The community model contains all the information about the files you send to you
     ```json {{ title: 'Response' }}
     {
       "id": "Nc6yKKMpcxiiFxp6",
+      "name": "Cataliz Batch 4",
+      "description": null,
+      "profile_picture": null,
       "message_id": "LoPsJaMcPBuFNjg1",
-      "conversation_id": "discussion_result.pdf",
-      "file_url": "https://assets.protocol.chat/communities/discussion_result.pdf",
-      "file_type": "application/pdf",
-      "file_size": 1230340,
+      "conversation_id": "hbA5GpSAzG7W1VHL",
+      "groups": [
+        {
+          "id": "l7cGNIBKZiNJ6wqF",
+          // ...
+        },
+        {
+          "id": "bQKmTCnhOcueT2XR",
+          // ...
+        },
+      ],
       "created_at": 692233200
     }
     ```
@@ -162,11 +200,21 @@ The community model contains all the information about the files you send to you
     ```json {{ title: 'Response' }}
     {
       "id": "Nc6yKKMpcxiiFxp6",
+      "name": "Cataliz Batch 4",
+      "description": null,
+      "profile_picture": null,
       "message_id": "LoPsJaMcPBuFNjg1",
-      "conversation_id": "discussion_result.pdf",
-      "file_url": "https://assets.protocol.chat/communities/discussion_result.pdf",
-      "file_type": "application/pdf",
-      "file_size": 1230340,
+      "conversation_id": "hbA5GpSAzG7W1VHL",
+      "groups": [
+        {
+          "id": "l7cGNIBKZiNJ6wqF",
+          // ...
+        },
+        {
+          "id": "bQKmTCnhOcueT2XR",
+          // ...
+        },
+      ],
       "created_at": 692233200
     }
     ```
@@ -186,9 +234,18 @@ The community model contains all the information about the files you send to you
     ### Optional attributes
 
     <Properties>
-      <Property name="conversation_id" type="string">
-        The new conversation_id for the community.
-      </Property>
+        <Property name="name" type="string">
+          The name for the community.
+        </Property>
+        <Property name="groups" type="array">
+          An array of group objects that are members of the community.
+        </Property>
+        <Property name="description" type="string">
+          The description for the group.
+        </Property>
+        <Property name="profile_picture" type="string">
+          The profile picture URL for the group
+        </Property>
     </Properties>
 
   </Col>
@@ -202,7 +259,7 @@ The community model contains all the information about the files you send to you
     const client = new ApiClient(token)
 
     await client.communities.update('Nc6yKKMpcxiiFxp6', {
-      conversation_id: 'discussion_result_updated.pdf',
+      description: 'Community for unity in diversity',
     })
     ```
 
@@ -211,11 +268,21 @@ The community model contains all the information about the files you send to you
     ```json {{ title: 'Response' }}
     {
       "id": "Nc6yKKMpcxiiFxp6",
+      "name": "Cataliz Batch 4",
+      "description": 'Community for unity in diversity',
+      "profile_picture": null,
       "message_id": "LoPsJaMcPBuFNjg1",
-      "conversation_id": "discussion_result.pdf",
-      "file_url": "https://assets.protocol.chat/communities/discussion_result_updated.pdf",
-      "file_type": "application/pdf",
-      "file_size": 1230340,
+      "conversation_id": "hbA5GpSAzG7W1VHL",
+      "groups": [
+        {
+          "id": "l7cGNIBKZiNJ6wqF",
+          // ...
+        },
+        {
+          "id": "bQKmTCnhOcueT2XR",
+          // ...
+        },
+      ],
       "created_at": 692233200
     }
     ```
